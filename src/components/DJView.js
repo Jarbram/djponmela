@@ -32,12 +32,13 @@ const DJView = () => {
   const handleFilter = () => {
     const sortedSongs = [...songs].sort((a, b) => {
       if (isFiltered) {
-        return b.fields['Artist'].localeCompare(a.fields['Artist'])
+        return b.fields['Created'].localeCompare(a.fields['Created'])
       }
       return a.fields['Artist'].localeCompare(b.fields['Artist']);
     });
     setSongs(sortedSongs);
     setIsFiltered(!isFiltered);
+    console.log(songs)
   };
 
   return (
