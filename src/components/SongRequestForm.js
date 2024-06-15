@@ -172,13 +172,13 @@ const SongRequestForm = () => {
           boxShadow: 24,
           p: 4,
         }}>
-          <Typography variant="h6" component="h2">
+          <Typography variant="h6" component="h3">
             Tu canción fue solicitada
           </Typography>
           <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2,backgroundColor: '#54A772' }}>
             Pedir otra
           </Button>
-          <Button component={Link} to="https://www.instagram.com/djdiegopozo/" fullWidth variant="outlined"  sx={{ marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
+          <Button component={Link} to="https://www.instagram.com/djdiegopozo/" fullWidth variant="outlined"  sx={{ fontSize: '', marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
             Sígueme en Instagram
           </Button>
         </Box>
