@@ -3,7 +3,7 @@ import { TextField, Button, List, ListItem, ListItemText, Paper, Container, Moda
 import { Close as CloseIcon } from '@mui/icons-material';
 import { searchSongs } from '../api/deezer';
 import { createSongRequest, getDJInfo } from '../api/airtable';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 const SongRequestForm = () => {
   const { formId } = useParams();
@@ -177,6 +177,9 @@ const SongRequestForm = () => {
           </Typography>
           <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2,backgroundColor: '#54A772' }}>
             Pedir otra
+          </Button>
+          <Button component={Link} to="https://www.instagram.com/djdiegopozo/" fullWidth variant="outlined"  sx={{ marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
+            Sígueme en Instagram
           </Button>
         </Box>
       </Modal>
