@@ -1,6 +1,12 @@
 import axios from 'axios';
 
+
 export const searchSongs = async (query) => {
-  const response = await axios.get(`https://api.deezer.com/search?q=${query}`);
-  return response.data.data;  
+  try {
+    const response = await axios.get(`/api/search?q=${query}`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Error searching songs:', error);
+    throw error;
+  }
 };
