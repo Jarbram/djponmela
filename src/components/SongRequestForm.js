@@ -172,7 +172,7 @@ const SongRequestForm = () => {
           boxShadow: 24,
           p: 4,
         }}>
-          <Typography variant="h6" component="h3">
+          <Typography variant="h6" component="h3" sx={{fontSize:'1rem'}}>
             Tu canción fue solicitada
           </Typography>
           <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2,backgroundColor: '#54A772' }}>
