@@ -44,7 +44,7 @@ const Home = () => {
                   {testimonial.text}
                 </Typography>
               </Paper>
-              <Typography mt={1} sx={{ textAlign: 'center', fontSize: '0.8rem' }}>
+              <Typography mt={1} sx={{ textAlign: 'center', fontSize: '0.9rem' }}>
                 {testimonial.name}
               </Typography>
             </Grid>
@@ -81,10 +81,10 @@ const Home = () => {
       <Box sx={{ mt: 5, mb: 5, textAlign: 'center' }}>
         <Paper elevation={2} sx={{ p: 3,backgroundColor: '#F8F7FB', color: '#383B3D' }}>
           <Typography variant="h6" gutterBottom>
-          ¿Estás interesado en probar nuestro servicio? ¡No dudes hazlo!
+          ¿Estás interesado en probar nuestro servicio? ¡!
           </Typography>
           <Button component={Link} to="https://api.whatsapp.com/send?phone=51945429543&text=%C2%A1Hola%20Roberto!%20Quiero%20ver%20una%20demo%20de%20la%20app%20para%20DJs%20%F0%9F%8E%B6%F0%9F%94%A5" variant="contained" color="primary" size="large">
-            Contáctanos
+          ¡Contáctanos!
           </Button>
         </Paper>
       </Box>
