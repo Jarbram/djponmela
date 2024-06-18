@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Carousel from 'react-material-ui-carousel';
 import DG from '../assets/djgiangi.jpg';
 import DD from '../assets/djdiegopozo.jpeg';
+import DH from '../assets/djhans.jpeg'
 import image1 from '../assets/IMG1.png';
 import image2 from '../assets/IMG2.png';
 import image3 from '../assets/IMG3.png';
@@ -15,6 +16,7 @@ const Home = () => {
   const testimonials = [
     { name: 'DJ Giangi', text: '"Muy buena aplicación, se proyecta a que será algo revolucionario en la industria del Dj. Recomendado."', image: DG },
     { name: 'DJ Diego Pozo', text: '“Una app indispensable para los DJ, facilita la conexión con el público y te ayuda a comprenderlos para mantener siempre la pista de baile on fire”. ', image: DD },
+    {name:'DJ Hans', text:'Lo máximo la aplicación. Me ayudó a interactuar más con el publico y que la juerga sea más chévere. Lo máximo. Recomendadísimo 🔥',image:DH}
   ];
 
   const images = [image1, image2, image3];
