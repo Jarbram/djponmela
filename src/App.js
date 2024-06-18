@@ -5,6 +5,7 @@ import SongRequestForm from './components/SongRequestForm';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; 
+import Home from './components/home';
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <CssBaseline />
       <Router>
         <Routes>
+          <Route path="/" element={<Home/>} />
           <Route path="/djv/:djId" element={<DJView />} />
           <Route path="/rs/:formId" element={<SongRequestForm />} />
       </Routes>
