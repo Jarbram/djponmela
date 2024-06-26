@@ -52,7 +52,7 @@ const DJView = () => {
     >
       <Container maxWidth="md">
         <Typography variant="h3" align="center" gutterBottom>
-          ¡DJ Pónmela!
+          ¡DJ Ponla!
         </Typography>
         <Typography variant="h5" align="center" gutterBottom>
           La gente quiere escuchar:
