@@ -4,6 +4,8 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import { searchSongs } from '../api/deezer';
 import { createSongRequest, getDJInfo } from '../api/airtable';
 import { Link, useParams } from 'react-router-dom';
+import LogoExtendido from '../assets/Logo DJ Ponla extendido (sin fondo).png';
+import InstagramIcon from '@mui/icons-material/Instagram';
 
 const SongRequestForm = () => {
   const { formId } = useParams();
@@ -80,25 +82,33 @@ const SongRequestForm = () => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
-      <Typography variant="h4" component="h2" sx={{ marginBottom: 2, textAlign: 'center' }}>
-          ¡Noche de chicas!
-        </Typography>
-        <Box sx={{ textAlign: 'center', marginBottom: 4 }}>
+      <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
+          {loadingDJInfo ? (
+            <CircularProgress />
+          ) : (
+            djInfo.Logo && djInfo.Logo.length > 0 ? (
+              <img src={djInfo.Logo[0].url} alt={djInfo.Name} style={{ width: '40%', height:'40%', borderRadius: 10 }} />
+            ) : (
+              <Typography variant="h6" color="error">No se pudo cargar Logo</Typography>
+            )
+          )}
+        </Box>
+        <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
           {loadingDJInfo ? (
             <CircularProgress />
           ) : (
             djInfo.Foto && djInfo.Foto.length > 0 ? (
-              <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '100%', borderRadius: 10 }} />
+              <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '90%', height:'90%', borderRadius: 10 }} />
             ) : (
               <Typography variant="h6" color="error">No se pudo cargar la imagen del DJ</Typography>
             )
           )}
           <Typography variant="h5" component="h1" sx={{ marginTop: 2 }}>
-            {djInfo.Name ? `${djInfo.Name} tocando en Alba Rooftop` : 'DJ tocando en Alba Rooftop'}
+            {djInfo.Name ? `Tocando ${djInfo.Name} ` : 'DJ tocando en Alba Rooftop'}
           </Typography>
         </Box>
-        <Typography variant="h6" component="h2" sx={{ marginBottom: 2, textAlign: 'center' }}>
-          ¿Qué canción quieres cantar?
+        <Typography variant="h6" component="h2" sx={{ marginBottom: 2, textAlign: 'center',fontSize:'1.1rem' }}>
+          ¿Qué canción quieres escuchar?
         </Typography>
         {!selectedSong && (
           <>
@@ -131,7 +141,7 @@ const SongRequestForm = () => {
               error={!!error}
               helperText={error}
             />
-            <Button fullWidth variant="contained" color="primary" onClick={handleSearch} sx={{ marginBottom: 2, backgroundColor: '#54A772' }} disabled={loading}>
+            <Button fullWidth variant="contained" color="primary" onClick={handleSearch} sx={{ marginTop:-1 , marginBottom: 2, backgroundColor: '#54A772' }} disabled={loading}>
               {loading ? <CircularProgress size={24} /> : 'Buscar'}
             </Button>
           </>
@@ -144,7 +154,7 @@ const SongRequestForm = () => {
           ))}
         </List>
         {selectedSong && (
-          <Paper elevation={1} sx={{ padding: 2, marginTop: 2 }}>
+          <Paper elevation={1} sx={{ padding: 2, marginTop: -1, marginBottom:2 }}>
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <Box>
                 <Typography variant="subtitle1">Canción seleccionada</Typography>
@@ -154,11 +164,15 @@ const SongRequestForm = () => {
                 <CloseIcon />
               </IconButton>
             </Box>
-            <Button fullWidth variant="contained"  onClick={handleSubmit} sx={{ marginTop: 2, backgroundColor: '#54A772' }} disabled={loading}>
+            <Button fullWidth variant="contained"  onClick={handleSubmit} sx={{ marginTop: 2 , backgroundColor: '#54A772' }} disabled={loading}>
               {loading ? <CircularProgress size={24} /> : 'Solicitar canción'}
             </Button>
           </Paper>
         )}
+        <Box sx={{ textAlign: 'center', marginBottom: 0 }}>
+        <Typography variant="subtitle1" sx={{fontSize:'0.8rem',marginBottom:-2,marginTop:4}}>Creado por:</Typography>
+          <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '50%', height:'50%', borderRadius: 10 }} />
+        </Box>
       </Paper>
       <Modal open={open} onClose={handleClose}>
         <Box sx={{
@@ -168,8 +182,8 @@ const SongRequestForm = () => {
           transform: 'translate(-50%, -50%)',
           width: 300,
           bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
+          border: '1px solid #000',
+          boxShadow: 25,
           p: 4,
         }}>
           <Typography variant="h6" component="h3" sx={{fontSize:'1rem'}}>
@@ -178,8 +192,8 @@ const SongRequestForm = () => {
           <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2,backgroundColor: '#54A772' }}>
             Pedir otra
           </Button>
-          <Button component={Link} to="https://www.instagram.com/djdiegopozo/" fullWidth variant="outlined"  sx={{ fontSize: '', marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
-            Sígueme en Instagram
+          <Button component={Link} to="https://www.instagram.com/rooftopalba/" fullWidth variant="outlined"  sx={{ fontSize: '', marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
+            <InstagramIcon /> @rooftopalba
           </Button>
         </Box>
       </Modal>

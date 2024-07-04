@@ -11,6 +11,7 @@ import image3 from '../assets/IMG3.png';
 import logo1 from '../assets/alba.png';
 import logo2 from '../assets/L-Ancora.png';
 import logo3 from '../assets/dembow.png';
+import LogoExtendido from '../assets/Logo DJ Ponla extendido (sin fondo).png'
 
 const Home = () => {
   const testimonials = [
@@ -29,8 +30,11 @@ const Home = () => {
 
   return (
     <Container maxWidth="lg">
+      <Box sx={{ textAlign: 'center', marginBottom: 0,marginTop:2 }}>
+          <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '80%', height:'80%', borderRadius: 10 }} />
+        </Box>
       {/* Testimonials */}
-      <Box sx={{ mt: 5, mb: 5 }}>
+      <Box sx={{  mb: 5 }}>
         <Typography variant="h6" align="center" mb={2} sx={{ fontSize: '1rem', color:'#A6A5A6' }}>
           Escúchalo de nuestros clientes
         </Typography>
