@@ -82,31 +82,7 @@ const SongRequestForm = () => {
   return (
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
-      <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
-          {loadingDJInfo ? (
-            <CircularProgress />
-          ) : (
-            djInfo.Logo && djInfo.Logo.length > 0 ? (
-              <img src={djInfo.Logo[0].url} alt={djInfo.Name} style={{ width: '40%', height:'40%', borderRadius: 10 }} />
-            ) : (
-              <Typography variant="h6" color="error">No se pudo cargar Logo</Typography>
-            )
-          )}
-        </Box>
-        <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
-          {loadingDJInfo ? (
-            <CircularProgress />
-          ) : (
-            djInfo.Foto && djInfo.Foto.length > 0 ? (
-              <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '90%', height:'90%', borderRadius: 10 }} />
-            ) : (
-              <Typography variant="h6" color="error">No se pudo cargar la imagen del DJ</Typography>
-            )
-          )}
-          <Typography variant="h5" component="h1" sx={{ marginTop: 2 }}>
-            {djInfo.Name ? `Tocando ${djInfo.Name} ` : 'DJ tocando en Alba Rooftop'}
-          </Typography>
-        </Box>
+        <DJInfoSection djInfo={djInfo} loadingDJInfo={loadingDJInfo} />
         <Typography variant="h6" component="h2" sx={{ marginBottom: 2, textAlign: 'center',fontSize:'1.1rem' }}>
           ¿Qué canción quieres escuchar?
         </Typography>
@@ -154,51 +130,92 @@ const SongRequestForm = () => {
           ))}
         </List>
         {selectedSong && (
-          <Paper elevation={1} sx={{ padding: 2, marginTop: -1, marginBottom:2 }}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Box>
-                <Typography variant="subtitle1">Canción seleccionada</Typography>
-                <Typography variant="body1">{selectedSong.title} por {selectedSong.artist.name}</Typography>
-              </Box>
-              <IconButton onClick={handleCancel} aria-label="cancel">
-                <CloseIcon />
-              </IconButton>
-            </Box>
-            <Button fullWidth variant="contained"  onClick={handleSubmit} sx={{ marginTop: 2 , backgroundColor: '#54A772' }} disabled={loading}>
-              {loading ? <CircularProgress size={24} /> : 'Solicitar canción'}
-            </Button>
-          </Paper>
+          <SelectedSongSection
+            selectedSong={selectedSong}
+            handleCancel={handleCancel}
+            handleSubmit={handleSubmit}
+            loading={loading}
+          />
         )}
-        <Box sx={{ textAlign: 'center', marginBottom: 0 }}>
-        <Typography variant="subtitle1" sx={{fontSize:'0.8rem',marginBottom:-2,marginTop:4}}>Creado por:</Typography>
-          <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '50%', height:'50%', borderRadius: 10 }} />
-        </Box>
+        <FooterLogo />
       </Paper>
-      <Modal open={open} onClose={handleClose}>
-        <Box sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 300,
-          bgcolor: 'background.paper',
-          border: '1px solid #000',
-          boxShadow: 25,
-          p: 4,
-        }}>
-          <Typography variant="h6" component="h3" sx={{fontSize:'1rem'}}>
-            Tu canción fue solicitada
-          </Typography>
-          <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2,backgroundColor: '#54A772' }}>
-            Pedir otra
-          </Button>
-          <Button component={Link} to="https://www.instagram.com/rooftopalba/" fullWidth variant="outlined"  sx={{ fontSize: '', marginTop: 2, color:'#ffffff',borderColor:'#ffffff' }}>
-            <InstagramIcon /> @rooftopalba
-          </Button>
-        </Box>
-      </Modal>
+      <SongRequestModal open={open} handleClose={handleClose} />
     </Container>
   );
 };
+
+const DJInfoSection = ({ djInfo, loadingDJInfo }) => (
+  <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
+    {loadingDJInfo ? (
+      <CircularProgress />
+    ) : (
+      <>
+        {djInfo.Logo && djInfo.Logo.length > 0 ? (
+          <img src={djInfo.Logo[0].url} alt={djInfo.Name} style={{ width: '40%', height: '40%', borderRadius: 10 }} />
+        ) : (
+          <Typography variant="h6" color="error">No se pudo cargar Logo</Typography>
+        )}
+        {djInfo.Foto && djInfo.Foto.length > 0 ? (
+          <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '90%', height: '90%', borderRadius: 10 }} />
+        ) : (
+          <Typography variant="h6" color="error">No se pudo cargar la imagen del DJ</Typography>
+        )}
+        <Typography variant="h5" component="h1" sx={{ marginTop: 2 }}>
+          {djInfo.Name ? `Tocando ${djInfo.Name} ` : 'DJ tocando en Alba Rooftop'}
+        </Typography>
+      </>
+    )}
+  </Box>
+);
+
+const SelectedSongSection = ({ selectedSong, handleCancel, handleSubmit, loading }) => (
+  <Paper elevation={1} sx={{ padding: 2, marginTop: -1, marginBottom: 2 }}>
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box>
+        <Typography variant="subtitle1">Canción seleccionada</Typography>
+        <Typography variant="body1">{selectedSong.title} por {selectedSong.artist.name}</Typography>
+      </Box>
+      <IconButton onClick={handleCancel} aria-label="cancel">
+        <CloseIcon />
+      </IconButton>
+    </Box>
+    <Button fullWidth variant="contained" onClick={handleSubmit} sx={{ marginTop: 2, backgroundColor: '#54A772' }} disabled={loading}>
+      {loading ? <CircularProgress size={24} /> : 'Solicitar canción'}
+    </Button>
+  </Paper>
+);
+
+const FooterLogo = () => (
+  <Box sx={{ textAlign: 'center', marginBottom: 0 }}>
+    <Typography variant="subtitle1" sx={{ fontSize: '0.8rem', marginBottom: -2, marginTop: 4 }}>Creado por:</Typography>
+    <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '50%', height: '50%', borderRadius: 10 }} />
+  </Box>
+);
+
+const SongRequestModal = ({ open, handleClose }) => (
+  <Modal open={open} onClose={handleClose}>
+    <Box sx={{
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 300,
+      bgcolor: 'background.paper',
+      border: '1px solid #000',
+      boxShadow: 25,
+      p: 4,
+    }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem' }}>
+        Tu canción fue solicitada
+      </Typography>
+      <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
+        Pedir otra
+      </Button>
+      <Button component={Link} to="https://www.instagram.com/rooftopalba/" fullWidth variant="outlined" sx={{ fontSize: '', marginTop: 2, color: '#ffffff', borderColor: '#ffffff' }}>
+        <InstagramIcon /> @rooftopalba
+      </Button>
+    </Box>
+  </Modal>
+);
 
 export default SongRequestForm;
