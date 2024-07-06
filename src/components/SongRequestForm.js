@@ -83,7 +83,7 @@ const SongRequestForm = () => {
     <Container maxWidth="sm">
       <Paper elevation={3} sx={{ padding: 3, marginTop: 4 }}>
         <DJInfoSection djInfo={djInfo} loadingDJInfo={loadingDJInfo} />
-        <Typography variant="h6" component="h2" sx={{ marginBottom: 2, textAlign: 'center',fontSize:'1.1rem' }}>
+        <Typography variant="h6" component="h2" sx={{ marginBottom: 2, textAlign: 'center', fontSize:'1.1rem' }}>
           ¿Qué canción quieres escuchar?
         </Typography>
         {!selectedSong && (
@@ -99,7 +99,6 @@ const SongRequestForm = () => {
                   color: "#ffffff",
                   "& .MuiOutlinedInput-notchedOutline": {
                     borderColor: "#C2C2C2",
-
                   },
                   "&.Mui-focused": {
                     "& .MuiOutlinedInput-notchedOutline": {
