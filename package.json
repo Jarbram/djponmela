@@ -19,7 +19,9 @@
     "react-scripts": "5.0.1",
     "react-swiper": "^0.1.5",
     "swiper": "^11.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "core-js": "^3.32.2",
+    "regenerator-runtime": "^0.13.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,7 +39,9 @@
     "production": [
       ">0.2%",
       "not dead",
-      "not op_mini all"
+      "not op_mini all",
+      "not ie <= 11",
+      "not android <= 4.4"
     ],
     "development": [
       "last 1 chrome version",
@@ -46,6 +50,10 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "@babel/core": "^7.22.10",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-react": "^7.22.10",
+    "babel-loader": "^9.1.2"
   }
 }
