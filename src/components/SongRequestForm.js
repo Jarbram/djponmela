@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { TextField, Button, List, ListItem, ListItemText, Paper, Container, Modal, Box, Typography, CircularProgress, IconButton } from '@mui/material';
+import React, { useState, useEffect, useCallback } from 'react';
+import {
+  TextField, Button, List, ListItem, ListItemText, Paper, Container, Modal, Box, Typography, CircularProgress, IconButton
+} from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
 import { searchSongs } from '../api/deezer';
 import { createSongRequest, getDJInfo } from '../api/airtable';
@@ -32,7 +34,7 @@ const SongRequestForm = () => {
     fetchDJInfo();
   }, [formId]);
 
-  const handleSearch = async () => {
+  const handleSearch = useCallback(async () => {
     if (!query.trim()) {
       setError('El campo de búsqueda no puede estar vacío');
       return;
@@ -48,15 +50,15 @@ const SongRequestForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [query]);
 
-  const handleSelect = (song) => {
+  const handleSelect = useCallback((song) => {
     setSelectedSong(song);
     setResults([]);
     setQuery('');
-  };
+  }, []);
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (!selectedSong) return;
     setLoading(true);
     try {
@@ -68,7 +70,7 @@ const SongRequestForm = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [formId, selectedSong]);
 
   const handleCancel = () => {
     setSelectedSong(null);
@@ -94,7 +96,7 @@ const SongRequestForm = () => {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               sx={{
-                marginBottom:'2rem',
+                marginBottom: '2rem',
                 "& .MuiOutlinedInput-root": {
                   color: "#ffffff",
                   "& .MuiOutlinedInput-notchedOutline": {
@@ -116,7 +118,14 @@ const SongRequestForm = () => {
               error={!!error}
               helperText={error}
             />
-            <Button fullWidth variant="contained" color="primary" onClick={handleSearch} sx={{ marginTop:-1 , marginBottom: 2, backgroundColor: '#54A772' }} disabled={loading}>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={handleSearch}
+              sx={{ marginTop: -1, marginBottom: 2, backgroundColor: '#54A772' }}
+              disabled={loading}
+            >
               {loading ? <CircularProgress size={24} /> : 'Buscar'}
             </Button>
           </>
