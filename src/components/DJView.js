@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { getDJRecords, deleteDJRecord, createSongRequest } from '../api/airtable';
+import { getDJRecords, deleteDJRecord, saveSongRequest } from '../api/airtable';
 import { Container, Grid, Card, CardContent, Typography, Button, Box, CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import LogoExtendido from '../assets/Logo DJ Ponla extendido (sin fondo).png';
@@ -32,7 +32,7 @@ const DJView = () => {
     try {
       const songToDelete = songs.find(song => song.id === recordId);
       const newTableId = djId.replace(/^f|m$/g, '');
-      await createSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist']);
+      await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created']);
       await deleteDJRecord(djId, recordId);
       setSongs(prevSongs => prevSongs.filter(song => song.id !== recordId));
     } catch (error) {

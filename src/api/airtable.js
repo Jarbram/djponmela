@@ -46,6 +46,28 @@ export const createSongRequest = async (formId, songName, artistName) => {
   });
 };
 
+export const saveSongRequest = async (formId, songName, artistName, created) => {
+  return new Promise((resolve, reject) => {
+    base(formId).create([
+      {
+        "fields": {
+          "Song Name": songName,
+          "Artist": artistName,
+          "Time of request": created
+        }
+      }
+    ], function(err, records) {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        resolve(records);
+      }
+    });
+  });
+};
+
+
 export const deleteDJRecord = async (djViewId, recordId) => {
   return new Promise((resolve, reject) => {
     base(djViewId).destroy([recordId], function(err, deletedRecords) {
