@@ -132,7 +132,7 @@ const SongRequestForm = () => {
         )}
         <List>
           {results.map((song, index) => (
-            <ListItem button key={index} onClick={() => handleSelect(song)}>
+            <ListItem  key={index} onClick={() => handleSelect(song)}>
               <ListItemText primary={song.title} secondary={song.artist.name} />
             </ListItem>
           ))}
