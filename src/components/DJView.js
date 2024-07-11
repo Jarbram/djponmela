@@ -16,7 +16,7 @@ const DJView = () => {
       setLoading(true);
       try {
         const records = await getDJRecords(djId);
-        setSongs(records);
+        setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
       } catch (error) {
         console.error('Error fetching songs:', error);
       } finally {
@@ -43,21 +43,14 @@ const DJView = () => {
   };
 
   const handleFilter = useCallback(() => {
-    const sortedSongs = [...songs].sort((a, b) => {
-      if (isFiltered) {
-        return b.fields['Created'].localeCompare(a.fields['Created']);
-      }
-      return a.fields['Artist'].localeCompare(b.fields['Artist']);
-    });
-    setSongs(sortedSongs);
     setIsFiltered(prev => !prev);
-  }, [songs, isFiltered]);
+  }, []);
 
   const refreshSongs = async () => {
     setLoading(true);
     try {
       const records = await getDJRecords(djId);
-      setSongs(records);
+      setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
     } catch (error) {
       console.error('Error refreshing songs:', error);
     } finally {
@@ -66,7 +59,10 @@ const DJView = () => {
   };
 
   const filteredSongs = useMemo(() => {
-    return [...songs].sort((a, b) => isFiltered ? b.fields['Created'].localeCompare(a.fields['Created']) : a.fields['Artist'].localeCompare(b.fields['Artist']));
+    if (isFiltered) {
+      return [...songs].sort((a, b) => a.fields['Artist'].localeCompare(b.fields['Artist']));
+    }
+    return songs;
   }, [songs, isFiltered]);
 
   return (
@@ -83,7 +79,7 @@ const DJView = () => {
             {loading ? <CircularProgress size={24} /> : 'Actualizar Lista'}
           </Button>
           <Button variant="contained" color="primary" sx={{ border: '1px solid', margin: 1, borderRadius: 5 }} onClick={handleFilter}>
-            {isFiltered ? 'Ordenar por Reciente' : 'Ordenar por Artista'}
+            {isFiltered ? 'Desactivar' : 'Filtrar por Artista'}
           </Button>
         </Box>
         <Grid container spacing={3}>
