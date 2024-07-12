@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { getDJRecords, deleteDJRecord, saveSongRequest } from '../api/airtable';
-import { Container, Grid, Card, CardContent, Typography, Button, Box, CircularProgress } from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, Button, Box, CircularProgress, IconButton } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import LogoExtendido from '../assets/Logo DJ Ponla extendido (sin fondo).png';
 
 const DJView = () => {
@@ -26,13 +27,13 @@ const DJView = () => {
     fetchSongs();
   }, [djId]);
 
-  const handleDelete = async (recordId) => {
+  const handleDelete = async (recordId, option = '') => {
     setLoadingSongs(prevState => ({ ...prevState, [recordId]: true }));
 
     try {
       const songToDelete = songs.find(song => song.id === recordId);
       const newTableId = djId.replace(/^f|m$/g, '');
-      await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created']);
+      await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created'], option);
       await deleteDJRecord(djId, recordId);
       setSongs(prevSongs => prevSongs.filter(song => song.id !== recordId));
     } catch (error) {
@@ -85,7 +86,7 @@ const DJView = () => {
         <Grid container spacing={3}>
           {filteredSongs.map((song, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
-              <Card sx={{ backgroundColor: '#fff', color: '#000', borderRadius: 5 }}>
+              <Card sx={{ backgroundColor: '#fff', color: '#000', borderRadius: 5, position: 'relative' }}>
                 <CardContent>
                   <Typography variant="h6">
                     {song.fields['Song Name']}
@@ -93,6 +94,14 @@ const DJView = () => {
                   <Typography variant="subtitle1" color="secondary">
                     {song.fields['Artist']}
                   </Typography>
+                  <IconButton
+                    size="large"
+                    sx={{ position: 'absolute', top: 10, right: 8, color:"#f44336" }}
+                    onClick={() => handleDelete(song.id, 'No la quiero poner')}
+                    disabled={loadingSongs[song.id]}
+                  >
+                    <CancelOutlinedIcon />
+                  </IconButton>
                   <Box mt={2}>
                     <Button
                       variant="contained"
