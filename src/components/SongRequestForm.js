@@ -147,7 +147,7 @@ const SongRequestForm = () => {
         )}
         <FooterLogo />
       </Paper>
-      <SongRequestModal open={open} handleClose={handleClose} />
+      <SongRequestModal open={open} handleClose={handleClose} djInfo={djInfo} />
     </Container>
   );
 };
@@ -200,7 +200,7 @@ const FooterLogo = () => (
   </Box>
 );
 
-const SongRequestModal = ({ open, handleClose }) => (
+const SongRequestModal = ({ open, handleClose, djInfo }) => (
   <Modal open={open} onClose={handleClose}>
     <Box sx={{
       position: 'absolute',
@@ -219,9 +219,11 @@ const SongRequestModal = ({ open, handleClose }) => (
       <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
         Pedir otra
       </Button>
-      <Button component={Link} to="https://www.instagram.com/rooftopalba/" fullWidth variant="outlined" sx={{ fontSize: '', marginTop: 2, color: '#ffffff', borderColor: '#ffffff' }}>
-        <InstagramIcon /> @rooftopalba
-      </Button>
+      {djInfo.InstagramLink && djInfo.InstagramHandle && (
+        <Button component={Link} to={djInfo.InstagramLink} fullWidth variant="outlined" sx={{ fontSize: '', marginTop: 2, color: '#ffffff', borderColor: '#ffffff' }}>
+          <InstagramIcon /> {djInfo.InstagramHandle}
+        </Button>
+      )}
     </Box>
   </Modal>
 );
