@@ -158,10 +158,8 @@ const DJInfoSection = ({ djInfo, loadingDJInfo }) => (
       <CircularProgress />
     ) : (
       <>
-        {djInfo.Logo && djInfo.Logo.length > 0 ? (
+        {djInfo.Logo && djInfo.Logo.length > 0 && (
           <img src={djInfo.Logo[0].url} alt={djInfo.Name} style={{ width: '40%', height: '40%', borderRadius: 10 }} />
-        ) : (
-          <Typography variant="h6" color="error">No se pudo cargar Logo</Typography>
         )}
         {djInfo.Foto && djInfo.Foto.length > 0 ? (
           <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '90%', height: '90%', borderRadius: 10 }} />
@@ -169,12 +167,13 @@ const DJInfoSection = ({ djInfo, loadingDJInfo }) => (
           <Typography variant="h6" color="error">No se pudo cargar la imagen del DJ</Typography>
         )}
         <Typography variant="h5" component="h1" sx={{ marginTop: 2 }}>
-          {djInfo.Name ? `Tocando ${djInfo.Name} ` : 'DJ tocando en Alba Rooftop'}
+          {djInfo.Name ? `Tocando ${djInfo.Name}` : 'DJ tocando en Alba Rooftop'}
         </Typography>
       </>
     )}
   </Box>
 );
+
 
 const SelectedSongSection = ({ selectedSong, handleCancel, handleSubmit, loading }) => (
   <Paper elevation={1} sx={{ padding: 2, marginTop: -1, marginBottom: 2 }}>
