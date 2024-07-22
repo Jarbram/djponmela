@@ -9,22 +9,24 @@ const DJView = () => {
   const { djId } = useParams();
   const [songs, setSongs] = useState([]);
   const [isFiltered, setIsFiltered] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [loadingSongs, setLoadingSongs] = useState({});
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchSongs = async () => {
-      setLoading(true);
       try {
         const records = await getDJRecords(djId);
         setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
       } catch (error) {
         console.error('Error fetching songs:', error);
-      } finally {
-        setLoading(false);
+        setError('Hubo un error al cargar las canciones. Por favor, inténtelo de nuevo.');
       }
     };
+
     fetchSongs();
+
+    const interval = setInterval(fetchSongs, 6000); // Actualiza cada 6 segundos
+    return () => clearInterval(interval);
   }, [djId]);
 
   const handleDelete = async (recordId, option = '') => {
@@ -47,18 +49,6 @@ const DJView = () => {
     setIsFiltered(prev => !prev);
   }, []);
 
-  const refreshSongs = async () => {
-    setLoading(true);
-    try {
-      const records = await getDJRecords(djId);
-      setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
-    } catch (error) {
-      console.error('Error refreshing songs:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const filteredSongs = useMemo(() => {
     if (isFiltered) {
       return [...songs].sort((a, b) => a.fields['Artist'].localeCompare(b.fields['Artist']));
@@ -76,14 +66,16 @@ const DJView = () => {
           La gente quiere escuchar:
         </Typography>
         <Box textAlign="center" mb={4}>
-          <Button variant="contained" sx={{ backgroundColor: '#54A772', margin: 1, borderRadius: 5 }} onClick={refreshSongs} disabled={loading}>
-            {loading ? <CircularProgress size={24} /> : 'Actualizar Lista'}
-          </Button>
           <Button variant="contained" color="primary" sx={{ border: '1px solid', margin: 1, borderRadius: 5 }} onClick={handleFilter}>
             {isFiltered ? 'Desactivar' : 'Filtrar por Artista'}
           </Button>
         </Box>
         <Grid container spacing={3}>
+          {filteredSongs.length === 0 && (
+            <Box sx={{ width: '100%', textAlign: 'center', color: '#fff', marginTop: 4 }}>
+              <Typography variant="h6" sx={{fontSize:"0.8rem"}}>A la espera de nuevas canciones...</Typography>
+            </Box>
+          )}
           {filteredSongs.map((song, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
               <Card sx={{ backgroundColor: '#fff', color: '#000', borderRadius: 5, position: 'relative' }}>
@@ -96,7 +88,7 @@ const DJView = () => {
                   </Typography>
                   <IconButton
                     size="large"
-                    sx={{ position: 'absolute', top: 10, right: 8, color:"#f44336" }}
+                    sx={{ position: 'absolute', top: 10, right: 8, color: "#f44336" }}
                     onClick={() => handleDelete(song.id, 'No la quiero poner')}
                     disabled={loadingSongs[song.id]}
                   >
@@ -119,6 +111,13 @@ const DJView = () => {
             </Grid>
           ))}
         </Grid>
+        {error && (
+          <Box textAlign="center" mt={4}>
+            <Typography variant="h6" color="error">
+              {error}
+            </Typography>
+          </Box>
+        )}
       </Container>
     </Box>
   );

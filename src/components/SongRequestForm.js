@@ -212,8 +212,9 @@ const SongRequestModal = ({ open, handleClose, djInfo }) => (
       boxShadow: 25,
       p: 4,
     }}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem' }}>
-        Tu canción fue solicitada
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
+      ¡Tu canción fue sugerida! 
+      El DJ la tendrá en consideración
       </Typography>
       <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
         Pedir otra

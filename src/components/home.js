@@ -31,7 +31,13 @@ const Home = () => {
   return (
     <Container maxWidth="lg">
       <Box sx={{ textAlign: 'center', marginBottom: 0,marginTop:2 }}>
-          <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '80%', height:'80%', borderRadius: 10 }} />
+          <img src={LogoExtendido} alt='Logo DJPonla' style={{
+            width: '60%',
+            height: 'auto',
+            borderRadius: 10,
+            maxWidth: { xs: '80%', md: '60%' },
+            maxHeight: 'auto'
+          }} />
         </Box>
       {/* Testimonials */}
       <Box sx={{  mb: 5 }}>

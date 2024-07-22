@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^5.15.20",
     "@mui/material": "^5.15.20",
     "@testing-library/jest-dom": "^5.17.0",
@@ -12,16 +12,17 @@
     "@testing-library/user-event": "^13.5.0",
     "airtable": "^0.12.2",
     "axios": "^1.7.2",
+    "core-js": "^3.32.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-material-ui-carousel": "^3.4.2",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "react-spring": "^9.7.4",
     "react-swiper": "^0.1.5",
+    "regenerator-runtime": "^0.13.11",
     "swiper": "^11.1.4",
-    "web-vitals": "^2.1.4",
-    "core-js": "^3.32.2",
-    "regenerator-runtime": "^0.13.11"
+    "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
