@@ -214,11 +214,16 @@ const SongRequestModal = ({ open, handleClose, djInfo }) => (
     }}>
       <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
       ¡Tu canción fue sugerida! 
+      </Typography>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
       El DJ la tendrá en consideración
       </Typography>
       <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
         Pedir otra
       </Button>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
+      ¡Síguenos en Instagram! 
+      </Typography>
       {djInfo.InstagramLink && djInfo.InstagramHandle && (
         <Button component={Link} to={djInfo.InstagramLink} fullWidth variant="outlined" sx={{ fontSize: '', marginTop: 2, color: '#ffffff', borderColor: '#ffffff' }}>
           <InstagramIcon /> {djInfo.InstagramHandle}
