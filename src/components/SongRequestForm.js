@@ -211,6 +211,7 @@ const SongRequestModal = ({ open, handleClose, djInfo }) => (
       border: '1px solid #fff',
       boxShadow: 25,
       p: 4,
+      borderRadius: 5,
     }}>
       <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
       ¡Tu canción fue sugerida! 
