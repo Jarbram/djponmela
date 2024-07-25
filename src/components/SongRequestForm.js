@@ -208,7 +208,7 @@ const SongRequestModal = ({ open, handleClose, djInfo }) => (
       transform: 'translate(-50%, -50%)',
       width: 300,
       bgcolor: 'background.paper',
-      border: '1px solid #000',
+      border: '1px solid #fff',
       boxShadow: 25,
       p: 4,
     }}>
@@ -221,7 +221,7 @@ const SongRequestModal = ({ open, handleClose, djInfo }) => (
       <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
         Pedir otra
       </Button>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
+      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center', marginTop: 2 }}>
       ¡Síguenos en Instagram! 
       </Typography>
       {djInfo.InstagramLink && djInfo.InstagramHandle && (
