@@ -68,21 +68,6 @@ export const saveSongRequest = async (formId, songName, artistName, created, opt
   });
 };
 
-
-
-export const deleteDJRecord = async (djViewId, recordId) => {
-  return new Promise((resolve, reject) => {
-    base(djViewId).destroy([recordId], function(err, deletedRecords) {
-      if (err) {
-        console.error(err);
-        reject(err);
-      } else {
-        resolve(deletedRecords);
-      }
-    });
-  });
-};
-
 export const getDJInfo = async (formId) => {
   return new Promise((resolve, reject) => {
     base('Database DJ\'s').select({

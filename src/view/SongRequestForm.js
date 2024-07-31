@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
-  TextField, Button, List, ListItem, ListItemText, Paper, Container, Modal, Box, Typography, CircularProgress, IconButton
+  TextField, Button, List, ListItem, ListItemText, Paper, Container, Typography, CircularProgress
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
 import { searchSongs } from '../api/deezer';
 import { createSongRequest, getDJInfo } from '../api/airtable';
-import { Link, useParams } from 'react-router-dom';
-import LogoExtendido from '../assets/Logo DJ Ponla extendido (sin fondo).png';
-import InstagramIcon from '@mui/icons-material/Instagram';
+import { useParams } from 'react-router-dom';
+import DJInfoSection from '../components/DJInfoSection';
+import SelectedSongSection from '../components/SelectedSongSection';
+import FooterLogo from '../components/FooterLogo';
+import SongRequestModal from '../components/SongRequestModal';
 
 const SongRequestForm = () => {
   const { formId } = useParams();
@@ -151,87 +152,5 @@ const SongRequestForm = () => {
     </Container>
   );
 };
-
-const DJInfoSection = ({ djInfo, loadingDJInfo }) => (
-  <Box sx={{ textAlign: 'center', marginBottom: 2 }}>
-    {loadingDJInfo ? (
-      <CircularProgress />
-    ) : (
-      <>
-        {djInfo.Logo && djInfo.Logo.length > 0 && (
-          <img src={djInfo.Logo[0].url} alt={djInfo.Name} style={{ width: '40%', height: '40%', borderRadius: 10 }} />
-        )}
-        {djInfo.Foto && djInfo.Foto.length > 0 ? (
-          <img src={djInfo.Foto[0].url} alt={djInfo.Name} style={{ width: '90%', height: '90%', borderRadius: 10 }} />
-        ) : (
-          <Typography variant="h6" color="error">No se pudo cargar la imagen del DJ</Typography>
-        )}
-        <Typography variant="h5" component="h1" sx={{ marginTop: 2 }}>
-          {djInfo.Name ? `Tocando ${djInfo.Name}` : 'DJ tocando en Alba Rooftop'}
-        </Typography>
-      </>
-    )}
-  </Box>
-);
-
-
-const SelectedSongSection = ({ selectedSong, handleCancel, handleSubmit, loading }) => (
-  <Paper elevation={1} sx={{ padding: 2, marginTop: -1, marginBottom: 2 }}>
-    <Box display="flex" justifyContent="space-between" alignItems="center">
-      <Box>
-        <Typography variant="subtitle1">Canción seleccionada</Typography>
-        <Typography variant="body1">{selectedSong.title} por {selectedSong.artist.name}</Typography>
-      </Box>
-      <IconButton onClick={handleCancel} aria-label="cancel">
-        <CloseIcon />
-      </IconButton>
-    </Box>
-    <Button fullWidth variant="contained" onClick={handleSubmit} sx={{ marginTop: 2, backgroundColor: '#54A772' }} disabled={loading}>
-      {loading ? <CircularProgress size={24} /> : 'Solicitar canción'}
-    </Button>
-  </Paper>
-);
-
-const FooterLogo = () => (
-  <Box sx={{ textAlign: 'center', marginBottom: 0 }}>
-    <Typography variant="subtitle1" sx={{ fontSize: '0.8rem', marginBottom: -2, marginTop: 4 }}>Creado por:</Typography>
-    <img src={LogoExtendido} alt='Logo DJPonla' style={{ width: '50%', height: '50%', borderRadius: 10 }} />
-  </Box>
-);
-
-const SongRequestModal = ({ open, handleClose, djInfo }) => (
-  <Modal open={open} onClose={handleClose}>
-    <Box sx={{
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      width: 300,
-      bgcolor: 'background.paper',
-      border: '1px solid #fff',
-      boxShadow: 25,
-      p: 4,
-      borderRadius: 5,
-    }}>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
-      ¡Tu canción fue sugerida! 
-      </Typography>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center' }}>
-      El DJ la tendrá en consideración
-      </Typography>
-      <Button fullWidth variant="contained" color="primary" onClick={handleClose} sx={{ marginTop: 2, backgroundColor: '#54A772' }}>
-        Pedir otra
-      </Button>
-      <Typography variant="h6" component="h3" sx={{ fontSize: '1rem', textAlign:'center', marginTop: 2 }}>
-      ¡Síguenos en Instagram! 
-      </Typography>
-      {djInfo.InstagramLink && djInfo.InstagramHandle && (
-        <Button component={Link} to={djInfo.InstagramLink} fullWidth variant="outlined" sx={{ fontSize: '', marginTop: 2, color: '#ffffff', borderColor: '#ffffff' }}>
-          <InstagramIcon /> {djInfo.InstagramHandle}
-        </Button>
-      )}
-    </Box>
-  </Modal>
-);
 
 export default SongRequestForm;

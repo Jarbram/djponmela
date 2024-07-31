@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { getDJRecords, deleteDJRecord, saveSongRequest } from '../api/airtable';
+import { getDJRecords, saveSongRequest } from '../api/airtable';
 import { Container, Grid, Card, CardContent, Typography, Button, Box, CircularProgress, IconButton } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -36,7 +36,6 @@ const DJView = () => {
       const songToDelete = songs.find(song => song.id === recordId);
       const newTableId = djId.replace(/^f|m$/g, '');
       await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created'], option);
-      await deleteDJRecord(djId, recordId);
       setSongs(prevSongs => prevSongs.filter(song => song.id !== recordId));
     } catch (error) {
       console.error('Error deleting song:', error);
@@ -100,7 +99,7 @@ const DJView = () => {
                       sx={{ borderRadius: 5 }}
                       color="error"
                       fullWidth
-                      onClick={() => handleDelete(song.id)}
+                      onClick={() => handleDelete(song.id, 'Se puso')}
                       disabled={loadingSongs[song.id]}
                     >
                       {loadingSongs[song.id] ? <CircularProgress size={24} /> : 'Ya la puse'}

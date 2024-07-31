@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import DJView from './components/DJView';
-import SongRequestForm from './components/SongRequestForm';
+import DJView from './view/DJView';
+import SongRequestForm from './view/SongRequestForm';
 import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme'; 
-import Home from './components/home';
+import Home from './view/home';
 
 const App = () => {
   return (
