@@ -83,3 +83,16 @@ export const getDJInfo = async (formId) => {
     });
   });
 };
+
+export const deleteDJRecord = async (djViewId, recordId) => {
+  return new Promise((resolve, reject) => {
+    base(djViewId).destroy([recordId], function(err, deletedRecords) {
+      if (err) {
+        console.error(err);
+        reject(err);
+      } else {
+        resolve(deletedRecords);
+      }
+    });
+  });
+};

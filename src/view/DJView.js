@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { getDJRecords, saveSongRequest } from '../api/airtable';
+import { getDJRecords,deleteDJRecord, saveSongRequest } from '../api/airtable';
 import { Container, Grid, Card, CardContent, Typography, Button, Box, CircularProgress, IconButton } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
@@ -12,21 +12,22 @@ const DJView = () => {
   const [loadingSongs, setLoadingSongs] = useState({});
   const [error, setError] = useState(null);
 
-  const fetchSongs = useCallback(async () => {
-    try {
-      const records = await getDJRecords(djId);
-      setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
-    } catch (error) {
-      console.error('Error fetching songs:', error);
-      setError('Hubo un error al cargar las canciones. Por favor, inténtelo de nuevo.');
-    }
-  }, [djId]);
-
   useEffect(() => {
+    const fetchSongs = async () => {
+      try {
+        const records = await getDJRecords(djId);
+        setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
+      } catch (error) {
+        console.error('Error fetching songs:', error);
+        setError('Hubo un error al cargar las canciones. Por favor, inténtelo de nuevo.');
+      }
+    };
+
     fetchSongs();
+
     const interval = setInterval(fetchSongs, 6000); // Actualiza cada 6 segundos
     return () => clearInterval(interval);
-  }, [fetchSongs]);
+  }, [djId]);
 
   const handleDelete = async (recordId, option = '') => {
     setLoadingSongs(prevState => ({ ...prevState, [recordId]: true }));
@@ -35,8 +36,7 @@ const DJView = () => {
       const songToDelete = songs.find(song => song.id === recordId);
       const newTableId = djId.replace(/^f|m$/g, '');
       await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created'], option);
-      
-      // Eliminamos la canción del estado local después de confirmación exitosa
+      await deleteDJRecord(djId, recordId);
       setSongs(prevSongs => prevSongs.filter(song => song.id !== recordId));
     } catch (error) {
       console.error('Error deleting song:', error);
@@ -100,7 +100,7 @@ const DJView = () => {
                       sx={{ borderRadius: 5 }}
                       color="error"
                       fullWidth
-                      onClick={() => handleDelete(song.id, 'Se puso')}
+                      onClick={() => handleDelete(song.id)}
                       disabled={loadingSongs[song.id]}
                     >
                       {loadingSongs[song.id] ? <CircularProgress size={24} /> : 'Ya la puse'}
