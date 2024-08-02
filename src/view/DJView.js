@@ -12,22 +12,21 @@ const DJView = () => {
   const [loadingSongs, setLoadingSongs] = useState({});
   const [error, setError] = useState(null);
 
+  const fetchSongs = useCallback(async () => {
+    try {
+      const records = await getDJRecords(djId);
+      setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
+    } catch (error) {
+      console.error('Error fetching songs:', error);
+      setError('Hubo un error al cargar las canciones. Por favor, inténtelo de nuevo.');
+    }
+  }, [djId]);
+
   useEffect(() => {
-    const fetchSongs = async () => {
-      try {
-        const records = await getDJRecords(djId);
-        setSongs(records.sort((a, b) => new Date(b.fields['Created']) - new Date(a.fields['Created'])));
-      } catch (error) {
-        console.error('Error fetching songs:', error);
-        setError('Hubo un error al cargar las canciones. Por favor, inténtelo de nuevo.');
-      }
-    };
-
     fetchSongs();
-
     const interval = setInterval(fetchSongs, 6000); // Actualiza cada 6 segundos
     return () => clearInterval(interval);
-  }, [djId]);
+  }, [fetchSongs]);
 
   const handleDelete = async (recordId, option = '') => {
     setLoadingSongs(prevState => ({ ...prevState, [recordId]: true }));
@@ -36,6 +35,8 @@ const DJView = () => {
       const songToDelete = songs.find(song => song.id === recordId);
       const newTableId = djId.replace(/^f|m$/g, '');
       await saveSongRequest(newTableId, songToDelete.fields['Song Name'], songToDelete.fields['Artist'], songToDelete.fields['Created'], option);
+      
+      // Eliminamos la canción del estado local después de confirmación exitosa
       setSongs(prevSongs => prevSongs.filter(song => song.id !== recordId));
     } catch (error) {
       console.error('Error deleting song:', error);
