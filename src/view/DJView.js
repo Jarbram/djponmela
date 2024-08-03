@@ -100,7 +100,7 @@ const DJView = () => {
                       sx={{ borderRadius: 5 }}
                       color="error"
                       fullWidth
-                      onClick={() => handleDelete(song.id)}
+                      onClick={() => handleDelete(song.id,'Se puso')}
                       disabled={loadingSongs[song.id]}
                     >
                       {loadingSongs[song.id] ? <CircularProgress size={24} /> : 'Ya la puse'}
